@@ -116,11 +116,12 @@
             text-align: justify;
         }
 
-        /* --- GALERIA COM CROSSFADE --- */
+        /* --- GALERIA COM FADE --- */
         .gallery {
             margin-top: 20px;
             text-align: center;
             position: relative;
+            height: 420px;
         }
 
         .gallery img {
@@ -139,32 +140,24 @@
             opacity: 1;
         }
 
-        .gallery-controls button {
+        /* Botão iniciar fotos */
+        #startPhotosBtn {
             background: #ff0033;
-            color: #fff;
             border: none;
-            padding: 8px 15px;
-            margin: 0 5px;
-            border-radius: 6px;
+            padding: 12px 25px;
+            margin-top: 15px;
+            border-radius: 8px;
+            font-size: 1.3rem;
+            color: #fff;
             cursor: pointer;
-            font-size: 1.2rem;
             transition: 0.3s;
-            position: relative;
-            z-index: 10;
         }
 
-        .gallery-controls button:hover {
-            background: #e63946cc;
+        #startPhotosBtn:hover {
+            background: #e63946;
         }
 
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            color: #ff0033;
-            font-style: italic;
-        }
-
-        /* Texto especial da foto 19 */
+        /* Mensagem final */
         #specialMessage {
             margin-top: 20px;
             font-size: 1.5rem;
@@ -193,124 +186,121 @@
 
 <body>
 
-    <!-- Música -->
-    <audio id="bgMusic" src="assets/musica.mp3" autoplay loop></audio>
+<!-- Música -->
+<audio id="bgMusic" src="assets/musica.mp3" autoplay loop></audio>
 
-    <!-- Botão coração -->
-    <div class="heart-container">
-        <button class="heart-button" id="heartBtn">❤️</button>
-        <div class="click-text">Clique aqui</div>
+<!-- Botão coração -->
+<div class="heart-container">
+    <button class="heart-button" id="heartBtn">❤️</button>
+    <div class="click-text">Clique aqui</div>
+</div>
+
+<!-- Envelope -->
+<div class="envelope" id="envelope"></div>
+
+<!-- Carta -->
+<div class="card" id="card">
+    <h1>Para Você ❤️</h1>
+
+    <p>
+        A gente se conhece há tão pouco tempo, e mesmo assim, cada dia ao seu lado tem sido incrível.  
+        Cada momento que passa, eu gosto ainda mais de você.  
+        Sei que tenho meus defeitos, penso demais às vezes, mas a cada dia me sinto mais tranquilo e seguro com você.<br><br>
+
+        Sei que já falei aquelas frases meio clichês, tipo "vai passar a vida toda comigo"… mas é sério, kkk.  
+        Tudo que eu puder fazer para que isso aconteça, eu farei.<br><br>
+
+        Esse pequeno presente é só uma forma de carinho, um jeito de te mostrar o quanto você é especial para mim.  
+        Feliz aniversário, minha gostosa ❤️
+    </p>
+
+    <!-- GALERIA -->
+    <div class="gallery" id="gallery"></div>
+
+    <button id="startPhotosBtn">▶ Iniciar Fotos</button>
+
+    <div id="specialMessage"></div>
+
+    <div class="footer">
+        Com carinho, de alguém que está gostando muito de você ❤️
     </div>
-
-    <!-- Envelope -->
-    <div class="envelope" id="envelope"></div>
-
-    <!-- Carta -->
-    <div class="card" id="card">
-        <h1>Para Você ❤️</h1>
-
-        <p>
-            A gente se conhece há tão pouco tempo, e mesmo assim, cada dia ao seu lado tem sido incrível.
-            Cada momento que passa, eu gosto ainda mais de você.
-            Sei que tenho meus defeitos, penso demais às vezes, mas a cada dia me sinto mais tranquilo e seguro com você.<br><br>
-
-            Sei que já falei aquelas frases meio clichês, tipo "vai passar a vida toda comigo"… mas é sério, kkk.
-            Tudo que eu puder fazer para que isso aconteça, eu farei.<br><br>
-
-            Esse pequeno presente é só uma forma de carinho, um jeito de te mostrar o quanto você é especial para mim.
-            Feliz aniversário, minha gostosa ❤️
-        </p>
-
-        <!-- GALERIA -->
-        <div class="gallery" id="gallery"></div>
-
-        <div class="gallery-controls">
-            <button id="prevBtn">⬅️</button>
-            <button id="nextBtn">➡️</button>
-        </div>
-
-        <div id="specialMessage"></div>
-
-        <div class="footer">
-            Com carinho, de alguém que está gostando muito de você ❤️
-        </div>
-    </div>
+</div>
 
 <script>
-    /* Corações flutuando */
-    function floatingHeart() {
-        const h = document.createElement("div");
-        h.className = "floating-heart";
-        h.innerHTML = "❤️";
-        h.style.left = Math.random() * 100 + "vw";
-        h.style.fontSize = (Math.random() * 20 + 10) + "px";
-        h.style.animationDuration = (Math.random() * 4 + 3) + "s";
-        document.body.appendChild(h);
-        setTimeout(() => h.remove(), 7000);
+/* Corações flutuando */
+function floatingHeart() {
+    const h = document.createElement("div");
+    h.className = "floating-heart";
+    h.innerHTML = "❤️";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.fontSize = (Math.random() * 20 + 10) + "px";
+    h.style.animationDuration = (Math.random() * 4 + 3) + "s";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 7000);
+}
+setInterval(floatingHeart, 500);
+
+/* Abertura */
+document.getElementById("heartBtn").onclick = () => {
+    document.querySelector(".heart-container").style.opacity = "0";
+    setTimeout(() => {
+        document.querySelector(".heart-container").style.display = "none";
+        const env = document.getElementById("envelope");
+        env.style.opacity = "1";
+
+        setTimeout(() => env.classList.add("open"), 700);
+        setTimeout(() => document.getElementById("card").style.display = "block", 1700);
+    }, 500);
+};
+
+/* Galeria */
+const images = [];
+for (let i = 1; i <= 19; i++) {
+    images.push(`assets/foto${i}.jpg`);
+}
+
+const gallery = document.getElementById("gallery");
+const specialMessage = document.getElementById("specialMessage");
+
+let currentIndex = 0;
+let photoInterval = null;
+
+// cria as imagens empilhadas
+images.forEach((src, i) => {
+    let img = document.createElement("img");
+    img.src = src;
+    if (i === 0) img.classList.add("active");
+    gallery.appendChild(img);
+});
+
+const imgElements = document.querySelectorAll(".gallery img");
+
+function updateGallery() {
+    imgElements.forEach(img => img.classList.remove("active"));
+    imgElements[currentIndex].classList.add("active");
+
+    // mensagem final
+    if (currentIndex === 18) {
+        specialMessage.innerHTML = "É muito bom ter você comigo ❤️";
+        specialMessage.style.opacity = 1;
+    } else {
+        specialMessage.style.opacity = 0;
     }
-    setInterval(floatingHeart, 500);
+}
 
-    /* Abertura */
-    document.getElementById("heartBtn").onclick = () => {
-        document.querySelector(".heart-container").style.opacity = "0";
-        setTimeout(() => {
-            document.querySelector(".heart-container").style.display = "none";
-            const env = document.getElementById("envelope");
-            env.style.opacity = "1";
+// botão para iniciar fotos
+document.getElementById("startPhotosBtn").onclick = () => {
+    if (photoInterval) return;
 
-            setTimeout(() => env.classList.add("open"), 700);
-            setTimeout(() => document.getElementById("card").style.display = "block", 1700);
-        }, 500);
-    };
+    updateGallery();
 
-    /* Galeria com fade */
-    const images = [];
-
-    for (let i = 1; i <= 19; i++) {
-        images.push(`assets/foto${i}.jpg`);
-    }
-
-    const gallery = document.getElementById("gallery");
-    const specialMessage = document.getElementById("specialMessage");
-    let currentIndex = 0;
-
-    // cria as imagens no HTML todas sobrepostas
-    images.forEach((src, i) => {
-        let img = document.createElement("img");
-        img.src = src;
-        if (i === 0) img.classList.add("active");
-        gallery.appendChild(img);
-    });
-
-    const imgElements = document.querySelectorAll(".gallery img");
-
-    function updateGallery() {
-        imgElements.forEach(img => img.classList.remove("active"));
-        imgElements[currentIndex].classList.add("active");
-
-        if (currentIndex === 18) {
-            specialMessage.innerHTML = "É muito bom ter você comigo ❤️";
-            specialMessage.style.opacity = 1;
-        } else {
-            specialMessage.style.opacity = 0;
-        }
-    }
-
-    document.getElementById("prevBtn").onclick = () => {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        updateGallery();
-    };
-
-    document.getElementById("nextBtn").onclick = () => {
+    photoInterval = setInterval(() => {
         currentIndex = (currentIndex + 1) % images.length;
         updateGallery();
-    };
+    }, 4000);
 
-    // autoplay
-    setInterval(() => {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateGallery();
-    }, 4500);
+    document.getElementById("startPhotosBtn").style.display = "none";
+};
 </script>
 
 </body>
