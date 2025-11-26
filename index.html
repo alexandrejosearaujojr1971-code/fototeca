@@ -1,0 +1,66 @@
+<!-- GALERIA DE FOTOS -->
+<div class="gallery">
+    <img id="currentImage" src="assets/foto1.jpg" alt="Memória">
+    <div class="gallery-controls">
+        <button id="prevBtn">⬅️</button>
+        <button id="nextBtn">➡️</button>
+    </div>
+</div>
+
+<style>
+/* GALERIA DE FOTOS */
+.gallery {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.gallery img {
+    width: 100%;
+    max-width: 700px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px #e63946aa;
+}
+
+.gallery-controls {
+    margin-top: 10px;
+}
+
+.gallery-controls button {
+    background: #ff0033;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    margin: 0 5px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: 0.3s;
+}
+
+.gallery-controls button:hover {
+    background: #e63946cc;
+}
+</style>
+
+<script>
+// GALERIA DE FOTOS
+const images = [
+    "assets/foto1.jpg",
+    "assets/foto2.jpg",
+    "assets/foto3.jpg",
+    "assets/foto4.jpg"
+];
+
+let currentIndex = 0;
+const currentImage = document.getElementById("currentImage");
+
+document.getElementById("prevBtn").onclick = () => {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    currentImage.src = images[currentIndex];
+};
+
+document.getElementById("nextBtn").onclick = () => {
+    currentIndex = (currentIndex + 1) % images.length;
+    currentImage.src = images[currentIndex];
+};
+</script>
