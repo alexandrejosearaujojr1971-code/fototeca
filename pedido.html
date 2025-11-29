@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pedido ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0b0b0b;
+      color: #ff0033;
+      font-family: "Georgia", serif;
+      display: flex;
+      justify-content: flex-start; /* permite rolagem vertical */
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-y: auto; /* permite scroll vertical */
+    }
+
+    #pedidoContainer {
+      text-align: center;
+      background: #111;
+      padding: 20px;
+      border: 2px solid #e63946;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #e6394666;
+      max-width: 90%;
+      width: 350px; /* largura do container */
+      margin: 40px auto; /* separação da borda superior e inferior */
+    }
+
+    #pedidoContainer img {
+      width: 100%;        /* responsivo */
+      max-width: 250px;   /* foto menor */
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      color: #ff0033;
+      margin-bottom: 20px;
+    }
+
+    .btns {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      border: 2px solid #00f;
+      color: #00f;
+      background: none;
+      border-radius: 8px;
+      transition: 0.3s;
+      position: relative;
+    }
+
+    .btn:hover {
+      background: #00f;
+      color: #000;
+    }
+
+    /* Corações caindo */
+    .floating-heart {
+      position: fixed;
+      bottom: -10px;
+      font-size: 18px;
+      color: #ff0033aa;
+      animation: float 6s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); opacity: 1; }
+      100% { transform: translateY(-120vh) translateX(30px); opacity: 0; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <div id="pedidoContainer">
+    <img src="assets/foto2.jpg" alt="Foto Pedido">
+    <h1>Sei que informal, mas vou falar mesmo assim:<br>  
+      BYANCA BRYTINEY DA SILVA, você aceita namorar comigo??
+    </h1>
+    <div class="btns">
+      <button class="btn" id="simBtn">SIM</button>
+      <button class="btn" id="naoBtn">NÃO</button>
+    </div>
+  </div>
+
+  <script>
+    // Corações caindo
+    function floatingHeart() {
+      const h = document.createElement("div");
+      h.className = "floating-heart";
+      h.innerHTML = "❤️";
+      h.style.left = Math.random() * 100 + "vw";
+      h.style.fontSize = (Math.random() * 20 + 10) + "px";
+      h.style.animationDuration = (Math.random() * 4 + 3) + "s";
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 7000);
+    }
+    setInterval(floatingHeart, 500);
+
+    const naoBtn = document.getElementById("naoBtn");
+    const simBtn = document.getElementById("simBtn");
+
+    // Se clicar em NÃO, o botão se move
+    naoBtn.addEventListener("click", () => {
+      const x = Math.random() * (window.innerWidth - naoBtn.offsetWidth);
+      const y = Math.random() * (window.innerHeight - naoBtn.offsetHeight);
+      naoBtn.style.position = "absolute";
+      naoBtn.style.left = x + "px";
+      naoBtn.style.top = y + "px";
+    });
+
+    // Se clicar em SIM, redireciona direto para final.html
+    simBtn.addEventListener("click", () => {
+      window.location.href = "final.html";
+    });
+  </script>
+
+</body>
+</html>
